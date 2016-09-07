@@ -9,9 +9,13 @@ $ kitchen test
 $ cd notify-failure
 $ kitchen test
 # tests fail
+
+$ cd notify-fixed
+$ kitchen test
+# tests pass
 ```
 
-notify-success and notify-failure create a directory with an owner that is lazy-loaded using a ruby_block resource:
+The cookbooks create a directory with an owner that is lazy-loaded using a ruby_block resource:
 
 ```
 # recipes/default.rb
@@ -30,11 +34,14 @@ directory "/tmp/foo" do
 end
 ```
 
-The two cookbooks are identical in all ways except that notify-success includes compat_resource 12.9.1 in metadata.rb/Berksfile while notify-failure includes 12.10.5
+The cookbooks are identical in all ways except in what version of compat_resource 12.9.1 is in metadata.rb/Berksfile:
 ```
 # notify-success/Berksfile:
 cookbook 'compat_resource', '= 12.9.1'
 
 # notify-failure/Berksfile:
 cookbook 'compat_resource', '= 12.10.5'
+
+# notify-fixed/Berksfile:
+cookbook 'compat_resource', '= 12.4.1'
 ```
